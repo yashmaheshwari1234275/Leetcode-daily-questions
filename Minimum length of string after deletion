@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int minimumLength(string s) {
+        // Map to store the frequency of characters
+        map<char, int> freq;
+
+        // Process each character in the string
+        for (int i = 0; i < s.length(); i++) {
+            if (freq[s[i]] < 2)  // If the frequency is less than 2, increase it
+                freq[s[i]]++;
+            else  // If the frequency is 2 or more, decrease it
+                freq[s[i]]--;
+        }
+
+        // Count the remaining characters
+        int count = 0;
+        for (auto& entry : freq) {
+            count += entry.second;  // Sum up the frequencies of remaining characters
+        }
+
+        return count;
+    }
+};

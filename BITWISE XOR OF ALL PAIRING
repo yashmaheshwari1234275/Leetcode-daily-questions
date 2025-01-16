@@ -1,0 +1,28 @@
+#include <vector>
+using namespace std;
+
+class Solution {
+private:
+    int xorOperation(const vector<int>& nums) {
+        int xorResult = 0;
+        for (int num : nums) {
+            xorResult ^= num;
+        }
+        return xorResult;
+    }
+public:
+    int xorAllNums(vector<int>& nums1, vector<int>& nums2) {
+        if (nums1.size() % 2 == 0 && nums2.size() % 2 == 0) {
+            return 0;
+        }
+        else if (nums1.size() % 2 == 1 && nums2.size() % 2 == 0) {
+            return xorOperation(nums2);
+        }
+        else if (nums1.size() % 2 == 0 && nums2.size() % 2 == 1) {
+            return xorOperation(nums1);
+        }
+        else {
+            return xorOperation(nums1) ^ xorOperation(nums2);
+        }
+    }
+};

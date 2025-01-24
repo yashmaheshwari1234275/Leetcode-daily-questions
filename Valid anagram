@@ -1,0 +1,35 @@
+class Solution {
+public:
+    bool countAllZeroes(vector<int>& count) {
+        for (int i = 0; i < 26; i++) {
+            if (count[i] != 0)
+                return false;
+        }
+        return true;
+    }
+    bool isAnagram(string s, string t) {
+        int n = s.length();
+        int m = t.length();
+        if (n != m)
+            return false;
+        vector<int> count(26, 0);
+        for (int i = 0; i < n; i++) {
+            count[s[i] - 'a']++;
+            count[t[i] - 'a']--;
+        }
+        if (countAllZeroes(count) == true)
+            return true;
+        return false;
+    }
+    vector<string> removeAnagrams(vector<string>& words) {
+        vector<string> uniqueWords;
+        uniqueWords.push_back(words[0]);
+        for (int i = 1; i < words.size(); i++) {
+            if (isAnagram(words[i-1], words[i]))
+                continue;
+            else
+                uniqueWords.push_back(words[i]);
+        }
+        return uniqueWords;
+    }
+};

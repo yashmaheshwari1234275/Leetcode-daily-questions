@@ -1,0 +1,35 @@
+class Solution {
+public:
+    string toHex(int num) {
+
+      string str="";
+      if(num==0) return "0";
+      unsigned int n=num;
+
+      while(n!=0){
+
+        int rem=n%16;
+        n=n/16;
+        if(rem<10){
+            str.push_back(rem+'0');
+        }else if(rem==10){
+            str.push_back('a');
+        }else if(rem==11){
+            str.push_back('b');
+        }else if(rem==12){
+            str.push_back('c');
+        }else if(rem==13){
+            str.push_back('d');
+        }else if(rem==14){
+            str.push_back('e');
+        }else if(rem==15){
+            str.push_back('f');
+        }
+
+      }
+
+        reverse(str.begin(),str.end());
+      return str;
+        
+    }
+};

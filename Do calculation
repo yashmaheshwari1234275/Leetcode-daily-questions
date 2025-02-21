@@ -1,0 +1,47 @@
+int calculate(string s) {
+    stack<int> numStack;  // Stack to store numbers
+    stack<char> opStack;  // Stack to store operators
+    int currentNum = 0;   // Current number being built
+    char operatorChar = '+';  // Default operator is '+'
+
+    // Add a final operator to handle the last number
+    s = s + "+";
+
+    for (int i = 0; i < s.length(); ++i) {
+        char c = s[i];
+
+        // If it's a digit, build the current number
+        if (isdigit(c)) {
+            currentNum = currentNum * 10 + (c - '0');
+        }
+
+        // If it's an operator or end of the string, process the current number
+        if ((!isdigit(c) && c != ' ') || i == s.length() - 1) {
+            if (operatorChar == '+') {
+                numStack.push(currentNum);
+            } else if (operatorChar == '-') {
+                numStack.push(-currentNum);
+            } else if (operatorChar == '*') {
+                int top = numStack.top();
+                numStack.pop();
+                numStack.push(top * currentNum);
+            } else if (operatorChar == '/') {
+                int top = numStack.top();
+                numStack.pop();
+                numStack.push(top / currentNum);  // Truncate towards zero (C++ does it automatically)
+            }
+
+            operatorChar = c;  // Update the operator
+            currentNum = 0;  // Reset the current number
+        }
+    }
+
+    // Sum up all the numbers in the stack
+    int result = 0;
+    while (!numStack.empty()) {
+        result += numStack.top();
+        numStack.pop();
+    }
+
+    return result;
+};

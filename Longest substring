@@ -1,0 +1,13 @@
+    for (int j = 0; j < n; j++) {
+        mp[s[j] - 'A']++; 
+        maxFreq = max(maxFreq, mp[s[j] - 'A']); // Update max frequency
+
+        while ((j - i + 1) - maxFreq > k) {
+            mp[s[i] - 'A']--;
+            i++;
+        }
+
+        ans = max(ans, j - i + 1);
+    }
+    return ans;
+}

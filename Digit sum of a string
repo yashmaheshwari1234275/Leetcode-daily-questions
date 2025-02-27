@@ -1,0 +1,22 @@
+
+
+class Solution {
+public:
+    string digitSum(string s, int k) {
+
+        while (s.length() > k) {
+            string temp = "";
+
+            for (int i = 0; i < s.length(); i += k) {
+                int num = 0;
+                for (int j = i; j < i + k && j < s.length(); j++) {
+                    num += (s[j] - '0');
+                }
+                //  string temp1 = str(num);
+                temp += to_string(num); // int to string
+            }
+            s = temp; 
+        }
+        return s;
+    }
+};

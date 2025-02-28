@@ -1,0 +1,51 @@
+class Solution {
+public:
+    // Function to check if s1 is a subsequence of s2
+    bool isSubsequence(const string& s1, const string& s2) {
+        int i = 0;
+        int j = 0;
+
+        while (i < s1.length() && j < s2.length()) {
+            if (s1[i] == s2[j]) {
+                i++;
+            }
+            j++;
+        }
+
+        return i == s1.length();
+    }
+
+    int findLUSlength(vector<string>& strs) {
+        // Sort the strings in ascending order by length and lexicographically
+        sort(strs.begin(), strs.end(), [](const string& a, const string& b) {
+            if (a.length() != b.length()) {
+                return a.length() < b.length();
+            }
+            return a < b; // lexicographical order as tie breaker
+        });
+
+        int longestUncommonSubsequenceLength = -1;
+
+        // Iterate from the largest string (end of the array)
+        for (int i = strs.size() - 1; i >= 0; --i) {
+            bool isUncommon = true;
+
+            // Compare strs[i] with all other strings before it
+            for (int j = 0; j < strs.size(); ++j) {
+                if (i != j && isSubsequence(strs[i], strs[j])) {
+                    isUncommon = false;
+                    break;
+                }
+            }
+
+            // If it's uncommon, update the result with the maximum length
+            if (isUncommon) {
+                longestUncommonSubsequenceLength =
+                    max(longestUncommonSubsequenceLength,
+                        static_cast<int>(strs[i].length()));
+            }
+        }
+
+        return longestUncommonSubsequenceLength;
+    }
+};

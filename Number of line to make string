@@ -1,0 +1,15 @@
+class Solution {
+public:
+    vector<int> numberOfLines(vector<int>& widths, string s) {
+        int pixelWidth = 0, totalLines = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (pixelWidth + widths[s[i] - 'a'] > 100) {
+                totalLines++;
+                pixelWidth = widths[s[i] - 'a'];
+            } else {
+                pixelWidth += widths[s[i] - 'a'];
+            }
+        }
+        return {totalLines + 1, pixelWidth};
+    }
+};

@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<vector<string>> ans;
+    int N;
+
+    bool isSafe(vector<string>& v, int& row, int& col) {
+        for (int i = row - 1; i >= 0; i--) {
+            if (v[i][col] == 'Q') {
+                return false;
+            }
+        }
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+            if (v[i][j] == 'Q')
+                return false;
+        }
+        for (int i = row - 1, j = col + 1; i >= 0 && j < N; i--, j++) {
+            if (v[i][j] == 'Q')
+                return false;
+        }
+        return true;
+    }
+
+    void solve(vector<string>& v, int row, int& count) {  // ✅ Pass count by reference
+        if (row == N) {
+            ans.push_back(v);
+            count++;  // ✅ Now this correctly updates the total count
+            return;
+        }
+        for (int col = 0; col < N; col++) {
+            if (isSafe(v, row, col)) {
+                v[row][col] = 'Q';
+                solve(v, row + 1, count);
+                v[row][col] = '.';
+            }
+        }
+    }
+
+    int totalNQueens(int n) {
+        N = n;
+        vector<string> v(n, string(n, '.'));
+        int row = 0;
+        int count = 0;
+        solve(v, row, count);
+        return count;  // ✅ Now returns the correct total number of solutions
+    }
+};

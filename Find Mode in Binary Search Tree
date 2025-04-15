@@ -1,0 +1,26 @@
+class Solution {
+public:
+    unordered_map<int,int> mp;
+    vector<int> result;
+
+    vector<int> findMode(TreeNode* root) {
+        dfs(root);
+        int maxi = 0;
+        for (auto &in : mp) {
+            if (in.second > maxi) {
+                maxi = in.second;
+                result = {in.first};
+            } else if (in.second == maxi) {
+                result.push_back(in.first);
+            }
+        }
+        return result;  
+    }
+
+    void dfs(TreeNode* root) {
+        if (root == nullptr) return;
+        dfs(root->left);
+        mp[root->val]++;
+        dfs(root->right);
+    }
+};

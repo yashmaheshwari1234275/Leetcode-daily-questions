@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int countLargestGroup(int n) {
+        unordered_map<int, int> mp;
+        
+        for (int i = 1; i <= n; i++) { 
+            int sum = 0, num = i;
+            while (num > 0) {          
+                sum += num % 10;
+                num /= 10;
+            }
+            mp[sum]++;                 
+        }
+
+        int count = 0;
+        int maxi = 0;
+        for (auto in : mp) {
+            if (in.second > maxi) {
+                maxi = in.second;
+                count = 1;
+            } else if (in.second == maxi) { 
+                count++;
+            }
+        }
+
+        return count;
+    }
+};

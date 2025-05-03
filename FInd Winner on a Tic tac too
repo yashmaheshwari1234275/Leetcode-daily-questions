@@ -1,0 +1,56 @@
+class Solution {
+public:
+    string tictactoe(vector<vector<int>>& moves) {
+        map<pair<int, int>, char> board;
+        char player = 'X'; 
+        for (int i = 0; i < moves.size(); i++) {
+            int row = moves[i][0];
+            int col = moves[i][1];
+            board[make_pair(row, col)] = player;
+            if (player == 'X') {
+                player = 'O';
+            } else {
+                player = 'X';
+            }
+        }
+        if (checkWinner(board, 'X')) {
+            return "A";
+        }
+        if (checkWinner(board, 'O')) {
+            return "B";
+        }
+
+        if (moves.size() == 9) {
+            return "Draw";
+        }
+
+        return "Pending";
+    }
+    bool checkWinner(map<pair<int, int>, char>& board, char p) {
+        for (int i = 0; i < 3; i++) {
+            if (board[make_pair(i, 0)] == p &&
+                board[make_pair(i, 1)] == p &&
+                board[make_pair(i, 2)] == p) {
+                return true;
+            }
+            if (board[make_pair(0, i)] == p &&
+                board[make_pair(1, i)] == p &&
+                board[make_pair(2, i)] == p) {
+                return true;
+            }
+        }
+        if (board[make_pair(0, 0)] == p &&
+            board[make_pair(1, 1)] == p &&
+            board[make_pair(2, 2)] == p) {
+            return true;
+        }
+
+        if (board[make_pair(0, 2)] == p &&
+            board[make_pair(1, 1)] == p &&
+            board[make_pair(2, 0)] == p) {
+            return true;
+        }
+
+        return false;
+    }
+};

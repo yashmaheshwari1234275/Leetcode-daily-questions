@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> ans;
+
+    int getMinimumDifference(TreeNode* root) {
+        dfs(root);
+        sort(ans.begin(), ans.end());
+
+        int count = INT_MAX;
+        for (int i = 1; i < ans.size(); ++i) {
+            count = min(count, abs(ans[i] - ans[i - 1]));
+        }
+
+        return count;
+    }
+
+    void dfs(TreeNode* root) {
+        if (root == nullptr) return;
+
+        ans.push_back(root->val);
+        dfs(root->left);
+        dfs(root->right);
+    }
+};

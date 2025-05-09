@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> ans;
+        string help;
+        solve(ans, help, 0, 0, n);
+        return ans;
+    }
+
+    void solve(vector<string>& ans, string help, int open, int close, int n) {
+        if (help.size() == n * 2) {
+            ans.push_back(help);
+            return;
+        }
+
+        if (open < n) {
+            solve(ans, help + '(', open + 1, close, n);
+        }
+        if (close < open) {
+            solve(ans, help + ')', open, close + 1, n);
+        }
+    }
+};

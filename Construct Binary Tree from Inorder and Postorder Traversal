@@ -1,0 +1,40 @@
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        if (inorder.size() != postorder.size()) {
+            return nullptr;
+        }
+        unordered_map<int, int> inorderMap;
+        for (int i = 0; i < inorder.size(); ++i) {
+            inorderMap[inorder[i]] = i;
+        }
+        return build(inorder, postorder, 0, inorder.size() - 1, 0, postorder.size() - 1, inorderMap);
+    }
+
+private:
+    TreeNode* build(vector<int>& inorder, vector<int>& postorder,
+                    int inStart, int inEnd,
+                    int postStart, int postEnd,
+                    unordered_map<int, int>& inorderMap) {
+        if (inStart > inEnd || postStart > postEnd) {
+            return nullptr;
+        }
+
+        int rootVal = postorder[postEnd];
+        TreeNode* root = new TreeNode(rootVal);
+        int rootIndex = inorderMap[rootVal];
+        int leftSize = rootIndex - inStart;
+
+        root->left = build(inorder, postorder,
+                           inStart, rootIndex - 1,
+                           postStart, postStart + leftSize - 1,
+                           inorderMap);
+
+        root->right = build(inorder, postorder,
+                            rootIndex + 1, inEnd,
+                            postStart + leftSize, postEnd - 1,
+                            inorderMap);
+
+        return root;
+    }
+};

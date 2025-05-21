@@ -1,0 +1,31 @@
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        vector<pair<int,int>> zeros;
+
+        // Collect all positions where the element is 0
+        for(int i = 0; i < matrix.size(); i++){
+            for(int j = 0; j < matrix[0].size(); j++){
+                if(matrix[i][j] == 0){
+                    zeros.push_back({i, j});
+                }
+            }
+        }
+
+        // Set entire row and column to 0 for each zero found
+        for(auto& p : zeros){
+            change(p.first, p.second, matrix);
+        }
+    }
+
+    void change(int row, int col, vector<vector<int>>& matrix){
+        // Set the entire row to 0
+        for(int j = 0; j < matrix[0].size(); j++){
+            matrix[row][j] = 0;
+        }
+        // Set the entire column to 0
+        for(int i = 0; i < matrix.size(); i++){
+            matrix[i][col] = 0;
+        }
+    }
+};

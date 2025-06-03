@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
+        int n = nums1.size();
+        int nums = 0;
+
+        unordered_map<int, int> hash1;
+        unordered_map<int, int> hash2;
+
+        // Store all possible sums of nums1[i] + nums2[j] in hash1
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                hash1[nums1[i] + nums2[j]]++;
+            }
+        }
+
+        // Store all possible sums of nums3[i] + nums4[j] in hash2
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                hash2[nums3[i] + nums4[j]]++;
+            }
+        }
+
+        // For each pair of sums, check if they cancel each other out
+        for (auto& [sum1, count1] : hash1) {
+            if (hash2.find(-sum1) != hash2.end()) {
+                nums += count1 * hash2[-sum1];
+            }
+        }
+
+        return nums;
+    }
+};

@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void flatten(TreeNode* root) {
+        if (!root) return;
+
+        stack<TreeNode*> ans;
+        ans.push(root);
+
+        while (!ans.empty()) {
+            TreeNode* curr = ans.top();
+            ans.pop();
+
+            if (curr->right) {
+                ans.push(curr->right);
+            }
+            if (curr->left) {
+                ans.push(curr->left);
+            }
+
+            if (!ans.empty()) {
+                curr->right = ans.top();
+            }
+            curr->left = NULL;
+        }
+    }
+};

@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int maxDiff(int num) {
+        string s = to_string(num);
+        string max_s = s, min_s = s;
+
+        // For max_s: replace first digit that is not '9' with '9'
+        for (char c : s) {
+            if (c != '9') {
+                for (char &ch : max_s) {
+                    if (ch == c)
+                        ch = '9';
+                }
+                break;  // only replace one digit (all its occurrences)
+            }
+        }
+
+        // For min_s: two cases depending on the first digit
+        if (s[0] != '1') {
+            // Case 1: replace all occurrences of first digit with '1'
+            char to = s[0];
+            for (char &ch : min_s) {
+                if (ch == to)
+                    ch = '1';
+            }
+        } else {
+            // Case 2: find first digit not '0' or '1', replace all with '0'
+            for (int i = 1; i < s.size(); i++) {
+                if (s[i] != '0' && s[i] != '1') {
+                    char to = s[i];
+                    for (char &ch : min_s) {
+                        if (ch == to)
+                            ch = '0';
+                    }
+                    break;
+                }
+            }
+        }
+
+        int maxi = stoi(max_s);
+        int mini = stoi(min_s);
+        return maxi - mini;
+    }
+};

@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int longestSubsequence(string s, int k) {
+    int count = 0;
+    int zeros = 0;
+    int n = s.size();
+    
+    // Count all '0's first — they add to length but not to value
+    for (char c : s) {
+        if (c == '0') zeros++;
+    }
+
+    count += zeros;
+
+    // Now check from right to left for '1's we can include
+    long long value = 0;
+    int power = 0;
+
+    for (int i = n - 1; i >= 0; --i) {
+        if (s[i] == '1') {
+            if (power < 31) { // 2^31 > 2e9, avoid overflow
+                long long add = 1LL << power;
+                if (value + add <= k) {
+                    value += add;
+                    count++;
+                }
+            }
+            power++;
+        } else {
+            power++;
+        }
+    }
+
+    return count;
+}
+
+};

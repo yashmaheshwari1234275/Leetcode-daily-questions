@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void mainw(vector<string> &ans, string &s, int i, int n) {
+        if (i >= n) {
+            ans.push_back(s);
+            return;
+        }
+
+        if (isalpha(s[i])) {
+            s[i] = tolower(s[i]);
+            mainw(ans, s, i + 1, n);
+
+            s[i] = toupper(s[i]);
+            mainw(ans, s, i + 1, n);
+        } else {
+            mainw(ans, s, i + 1, n);
+        }
+    }
+
+    vector<string> letterCasePermutation(string s) {
+        int n = s.length();
+        int idx = 0;
+        vector<string> ans;
+        mainw(ans, s, idx, n);
+        return ans;
+    }
+};

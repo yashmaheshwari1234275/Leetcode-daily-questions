@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int totalMoney(int n) {
+        int count = 1;  // starting deposit for each new week (week starts at 1)
+        int ans = 0;    // total money
+        int help = 1;   // current day's deposit
+        int day = 0;    // track days in current week
+        
+        while (n > 0) {
+            ans += help;
+            help++;
+            day++;
+            n--;
+            
+            // if 7 days are done, move to next week
+            if (day == 7) {
+                count++;
+                help = count;  // reset help to start of new week
+                day = 0;
+            }
+        }
+        return ans;
+    }
+};

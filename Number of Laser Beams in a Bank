@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int numberOfBeams(vector<string>& bank) {
+        int prev=0;
+        int ans=0;
+        for(auto in : bank ){
+            int coun= count(in.begin(),in.end(),'1');
+            if(coun>0){
+                ans += prev*coun ;
+                prev=coun;
+            }
+        }
+        return ans;
+    }
+};
